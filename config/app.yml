@@ -1,0 +1,11 @@
+all:
+  mp_reality_admin_plugin:
+    #dossier ou récupérer les css et js
+    web_dir:        /mpRealityAdminPlugin
+
+    # utiliser la version jquery fournit avec le plugin
+    use_jquery:     true
+    
+    # utiliser la feuille reset.css
+    css_reset:      false
+

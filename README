@@ -1,0 +1,81 @@
+# mpRealityAdminPlugin
+
+## Overview
+The `mpRealityAdminPlugin` provides a new admin generator theme with some additions.  
+
+##Installation ##
+
+###Step 1 - Download and install the plugin
+
+    symfony plugin:install  mpRealityAdminPlugin --stability=beta
+
+###Step 2 - Publish the assets
+
+    symfony plugin:publish-assets
+
+###Step 3 - Clear the cache
+
+    symfony cc
+
+##Configuration ##
+
+Enable the plugin in your project
+
+
+          //config/ProjectConfiguration.class.php
+          class ProjectConfiguration extends sfProjectConfiguration
+          {
+            public function setup()
+            {
+              $this->enablePlugins('sfDoctrinePlugin', 'mpRealityAdminPlugin ');
+            }
+          }
+
+##How to use it ? ##
+
+Generate an admin generator:
+
+    symfony doctrine:generate-admin --theme=mpReality
+
+**OR** if you already have an admin generator, you can simply modifiy the theme inside your generator.yml
+
+    generator:
+      class: mpRealtyAdminDoctrineGenerator
+      param:
+        theme: mpReality
+
+clear the cache
+
+    symfony cc
+    
+##Login screen##
+You can use the partial _login to style your login form (assuming you're using sfGuardAuth module)
+	  
+    [php]
+    // backend/modules/sfGuardAuth/templates/signingSuccess.php
+    <?php include_partial('mpReality/login', array('form' => $form)); ?>
+
+## Changelog ##
+
+
+* version 0.9.1: fix some bugs in documentation
+* version 0.9.0: add documentation
+* version 0.8.0: add documentation
+* version 0.7.0: add cool stuff on boolean fields
+* version 0.6.0: add search feature
+* version 0.5.0: ajaxify some actions
+* version 0.4.0: add a 'show' view parameter for generator.yml
+* version 0.3.0: add max-per-page selector 
+* version 0.2.0: add mpRealtyAdminDoctrineGenerator class
+* version 0.1.0: initial release
+
+## TODO ##
+
+* add new features integrating menu
+* clean up css and js
+
+Feel free to email me with suggestions/bugs.
+## Contact ##
+
+Mike Plavonil ( mikeplavo [at] gmail[dot] com )
+
