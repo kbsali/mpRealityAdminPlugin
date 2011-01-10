@@ -49,7 +49,11 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends <?ph
   <?php include dirname(__FILE__).'/../../parts/showAction.php' ?>
 <?php endif; ?>
 
+<?php if ($this->configuration->hasExporting()): ?>
+<?php include dirname(__FILE__).'/../../parts/exportAction.php' ?>
+<?php endif; ?>
 
+  
 <?php if ($this->configuration->getValue('list.batch_actions')): ?>
 <?php include dirname(__FILE__).'/../../parts/batchAction.php' ?>
 <?php endif; ?>

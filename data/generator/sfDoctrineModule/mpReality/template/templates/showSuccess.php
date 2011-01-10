@@ -1,6 +1,5 @@
 [?php use_helper('I18N', 'Date') ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
-[?php  include_partial('<?php echo $this->getModuleName() ?>/search');?]
 <div id="sf_admin_container">
   <h1>[?php echo <?php echo $this->getI18NString('show.title') ?> ?]</h1>
 

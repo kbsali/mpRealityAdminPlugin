@@ -71,9 +71,15 @@ abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper 
     return link_to('<span class="sprite_icon">'.__($params['label'], array(), 'sf_admin').'</span>', $this->getUrlForAction('edit'), $object, array('class' => 'graybutton edit_item f_left'));
   }
 
+/*  public function linkToExport($object, $params)
+  {
+    return '<li class="sf_admin_action_export">'.link_to(__($params['label'] != 'Show' ? $params['label'] : 'Aperçu', array(), 'sf_admin'), $this->getUrlForAction('show'), $object).'</li>';
+  }*/
+  
+
   public function getRouteArrayForAction($action, $module,$object = null)
   {
-    $route = array( 'module' => $module);
+    $route = array('module' => $module);
     
     if ('list' !== $action)
     {
@@ -82,5 +88,20 @@ abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper 
       
     return $route;
   }
-  
+
+  public function getExportColumnHeaders($headers)
+  {
+    if(isset($headers[0]) && strpos(strtolower($headers[0]), 'id') === 0) $headers[0] = ' '.$headers[0];
+    return implode("\t", $headers);
+  }
+
+  public function getExportRecordRow($record, $fields)
+  {
+    $row = array();
+    foreach ($fields as $field)
+    {
+      $row[] = $record[$field];
+    }
+    return implode("\t", $row);
+  }
 }

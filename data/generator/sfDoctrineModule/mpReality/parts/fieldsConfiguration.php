@@ -28,6 +28,13 @@
 <?php unset($this->config['new']['title']) ?>
   }
 
+  public function getExportTitle()
+  {
+    return '<?php echo $this->escapeString(isset($this->config['export']['title']) ? $this->config['export']['title'] : 'Export '.sfInflector::humanize($this->getModuleName())) ?>';
+<?php unset($this->config['export']['title']) ?>
+  }
+
+  
   public function getFilterDisplay()
   {
     return <?php echo $this->asPhp(isset($this->config['filter']['display']) ? $this->config['filter']['display'] : array()) ?>;
@@ -63,6 +70,30 @@
 <?php endif; ?>
 <?php unset($this->config['list']['display'], $this->config['list']['hide']) ?>
   }
+
+  public function getExportDisplay()
+  {
+<?php if (isset($this->config['export']['display'])): ?>
+    return <?php echo $this->asPhp($this->config['export']['display']) ?>;
+<?php elseif (isset($this->config['export']['hide'])): ?>
+    return <?php echo $this->asPhp(array_diff($this->getAllFieldNames(false), $this->config['export']['hide'])) ?>;
+<?php else: ?>
+    return <?php echo $this->asPhp($this->getAllFieldNames(false)) ?>;
+<?php endif; ?>
+<?php unset($this->config['export']['display'], $this->config['export']['hide']) ?>
+  }
+
+  public function getNewRedirection()
+  {
+  return '<?php echo $this->escapeString(isset($this->config['new']['redirection']) ? $this->config['new']['redirection'] : 'edit') ?>';
+  <?php unset($this->config['new']['redirection']) ?>
+  }
+
+public function getEditRedirection()
+{
+return '<?php echo $this->escapeString(isset($this->config['edit']['redirection']) ? $this->config['edit']['redirection'] : 'edit') ?>';
+<?php unset($this->config['edit']['redirection']) ?>
+}
 
   public function getFieldsDefault()
   {

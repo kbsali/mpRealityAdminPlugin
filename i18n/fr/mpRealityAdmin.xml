@@ -36,6 +36,22 @@
         <source>Required.</source>
         <target>Ce champs est requis</target>
       </trans-unit>
+      <trans-unit id="9">
+        <source>Exportation</source>
+        <target>Exportation</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Exporter</source>
+        <target>Exporter</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Hello</source>
+        <target>Bonjour</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Logout</source>
+        <target>A pli ta</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

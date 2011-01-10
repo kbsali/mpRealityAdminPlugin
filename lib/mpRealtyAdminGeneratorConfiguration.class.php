@@ -56,6 +56,12 @@ abstract class mpRealtyAdminGeneratorConfiguration
   abstract public function hasFilterForm();
 
   abstract public function getFilterFormClass();
+  
+  abstract public function getExportActions();
+
+  abstract public function getExportTitle();
+
+  abstract public function getExportDisplay();
 
   /**
    * Constructor.
@@ -88,17 +94,22 @@ abstract class mpRealtyAdminGeneratorConfiguration
       'form'   => array(
         'fields'  => array(),
       ),
-      'new'    => array(
-        'fields'  => array(),
-        'title'   => $this->getNewTitle(),
-        'actions' => $this->getNewActions() ? $this->getNewActions() : $this->getFormActions(),
-        'redirect' => $this->getNewRedirect(),
+      'new'  => array(
+        'fields'        => array(),
+        'title'         => $this->getNewTitle(),
+        'actions'       => $this->getNewActions() ? $this->getNewActions() : $this->getFormActions(),
+        'redirection'   => $this->getNewRedirection(),
       ),
-      'edit'   => array(
+      'edit'  => array(
+        'fields'        => array(),
+        'title'         => $this->getEditTitle(),
+        'actions'       => $this->getEditActions() ? $this->getEditActions() : $this->getFormActions(),
+        'redirection'   => $this->getEditRedirection(),
+      ),
+      'export'   => array(
         'fields'  => array(),
-        'title'   => $this->getEditTitle(),
-        'actions' => $this->getEditActions() ? $this->getEditActions() : $this->getFormActions(),
-        'redirect' => $this->getEditRedirect(),
+        'title'   => $this->getExportTitle(),
+        'actions' => $this->getExportActions() ? $this->getExportActions() : array('_list' => array('action' => 'index', 'label' => 'Back to list')),
       ),
     );
 
@@ -110,6 +121,7 @@ abstract class mpRealtyAdminGeneratorConfiguration
       $this->configuration['filter']['fields'][$field] = new sfModelGeneratorConfigurationField($field, array_merge($config['default'][$field], isset($config['filter'][$field]) ? $config['filter'][$field] : array()));
       $this->configuration['new']['fields'][$field]    = new sfModelGeneratorConfigurationField($field, array_merge($formConfig, isset($config['new'][$field]) ? $config['new'][$field] : array()));
       $this->configuration['edit']['fields'][$field]   = new sfModelGeneratorConfigurationField($field, array_merge($formConfig, isset($config['edit'][$field]) ? $config['edit'][$field] : array()));
+      $this->configuration['export']['fields'][$field] = new sfModelGeneratorConfigurationField($field, array_merge(array('label' => sfInflector::humanize(sfInflector::underscore($field))), $config['default'][$field], isset($config['export'][$field]) ? $config['export'][$field] : array()));
     }
 
     // "virtual" fields for list
@@ -121,6 +133,19 @@ abstract class mpRealtyAdminGeneratorConfiguration
         array('type' => 'Text', 'label' => sfInflector::humanize(sfInflector::underscore($field))),
         isset($config['default'][$field]) ? $config['default'][$field] : array(),
         isset($config['list'][$field]) ? $config['list'][$field] : array(),
+        array('flag' => $flag)
+      ));
+    }
+
+    // "virtual" fields for export
+    foreach ($this->getExportDisplay() as $field)
+    {
+      list($field, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($field);
+
+      $this->configuration['export']['fields'][$field] = new sfModelGeneratorConfigurationField($field, array_merge(
+        array('type' => 'Text', 'label' => sfInflector::humanize(sfInflector::underscore($field))),
+        isset($config['default'][$field]) ? $config['default'][$field] : array(),
+        isset($config['export'][$field]) ? $config['export'][$field] : array(),
         array('flag' => $flag)
       ));
     }
@@ -138,6 +163,12 @@ abstract class mpRealtyAdminGeneratorConfiguration
     foreach ($this->configuration['list']['actions'] as $action => $parameters)
     {
       $this->configuration['list']['actions'][$action] = $this->fixActionParameters($action, $parameters);
+    }
+
+    // export actions
+    foreach ($this->configuration['export']['actions'] as $action => $parameters)
+    {
+      $this->configuration['export']['actions'][$action] = $this->fixActionParameters($action, $parameters);
     }
 
     // list batch actions
@@ -171,12 +202,27 @@ abstract class mpRealtyAdminGeneratorConfiguration
       $this->configuration['list']['display'][$name] = $field;
     }
 
+    // export field configuration
+    $this->configuration['export']['display'] = array();
+    foreach ($this->getExportDisplay() as $name)
+    {
+      list($name, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
+      if (!isset($this->configuration['export']['fields'][$name]))
+      {
+        throw new InvalidArgumentException(sprintf('The field "%s" does not exist.', $name));
+      }
+      $field = $this->configuration['export']['fields'][$name];
+      $field->setFlag($flag);
+      $this->configuration['export']['display'][$name] = $field;
+    }
+
     // parse the %%..%% variables, remove flags and add default fields where
     // necessary (fixes #7578)
     $this->parseVariables('list', 'params');
     $this->parseVariables('edit', 'title');
     $this->parseVariables('list', 'title');
     $this->parseVariables('new', 'title');
+    $this->parseVariables('export', 'title');
 
     // action credentials
     $this->configuration['credentials'] = array(
@@ -186,6 +232,7 @@ abstract class mpRealtyAdminGeneratorConfiguration
       'edit'   => array(),
       'update' => array(),
       'delete' => array(),
+      'export' => array(),
     );
     foreach ($this->getActionsDefault() as $action => $params)
     {
@@ -520,6 +567,11 @@ abstract class mpRealtyAdminGeneratorConfiguration
     if ('_delete' == $action && !isset($parameters['confirm']))
     {
       $parameters['confirm'] = 'Are you sure?';
+    }
+
+    if ('_export' == $action && !isset($parameters['action']))
+    {
+      $parameters['action'] = 'export';
     }
 
     $parameters['class_suffix'] = strtolower('_' == $action[0] ? substr($action, 1) : $action);

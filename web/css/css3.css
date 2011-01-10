@@ -8,8 +8,8 @@ form .wysiwyg,
 .ui-selectmenu,
 #header .dm_module_search input#dm_module_search_input,
 #sf_admin_list_batch_actions.first, #sf_admin_list_th_actions.last,
-#dashboard ul li a,
-#dashboard ul li a span
+.dashboard ul li a,
+.dashboard ul li a span
 {
 -moz-border-radius: 5px;
 -webkit-border-radius: 5px;

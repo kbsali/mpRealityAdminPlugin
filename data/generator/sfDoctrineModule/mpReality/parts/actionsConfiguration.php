@@ -31,7 +31,11 @@
   
   public function getListActions()
   {
-    return <?php echo $this->asPhp(isset($this->config['list']['actions']) ? $this->config['list']['actions'] : array('_new' => null)) ?>;
+    return <?php echo $this->asPhp(isset($this->config['list']['actions']) ?
+
+      $this->config['list']['actions'] :
+                                        (isset($this->config['export']) && $this->config['export'] ?
+                                        array('_new' => null, 'export' => array('action' => 'export')) : array('_new' => null))) ?>;
 <?php unset($this->config['list']['actions']) ?>
   }
 
@@ -40,3 +44,10 @@
     return <?php echo $this->asPhp(isset($this->config['list']['batch_actions']) ? $this->config['list']['batch_actions'] : array('_delete' => null)) ?>;
 <?php unset($this->config['list']['batch_actions']) ?>
   }
+  
+  public function getExportActions()
+  {
+    return <?php echo $this->asPhp(isset($this->config['export']['actions']) ? $this->config['export']['actions'] : array()) ?>;
+<?php unset($this->config['export']['actions']) ?>
+  }
+

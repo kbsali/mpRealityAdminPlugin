@@ -46,7 +46,7 @@
       </trans-unit>
       <trans-unit id="11" approved="yes">
         <source>Required.</source>
-        <target>Richiesto.</target>
+        <target>Ce champ est requis.</target>
       </trans-unit>
       <trans-unit id="12" approved="yes">
         <source>An account with that email address already exists. If you have forgotten your password, click "cancel", then "Reset My Password."</source>

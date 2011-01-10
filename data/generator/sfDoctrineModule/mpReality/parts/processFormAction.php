@@ -33,7 +33,24 @@
       {
         $this->getUser()->setFlash('notice', $notice);
 
-        $this->redirect(array('sf_route' => '<?php echo $this->getUrlForAction('edit') ?>', 'sf_subject' => $<?php echo $this->getSingularName() ?>));
+        $route = '<?php echo $this->getUrlForAction('list') ?>';
+
+        $action = $form->getObject()->isNew() ? 'new' : 'edit';
+
+        $redirection = strtolower($this->configuration->getValue($action . '.redirection'));
+
+        if (isset($redirection) && 'list' !== $redirection)
+        {
+          $route .= '_' . $redirection;
+        }
+
+        $url = array('sf_route' => $route);
+        if (isset($redirection) && 'list' !== $redirection)
+        {
+          $url['sf_subject'] = $<?php echo $this->getSingularName(); ?>;
+        }
+
+        $this->redirect($url);
       }
     }
     else

@@ -1,5 +1,5 @@
 <div class="module_search">
-  <div class="filter_box" data-load-url="[?php echo url_for('@<?php echo $this->getModuleName() ?>?action=showFilters') ?]"></div>
+  <div class="filter_box" data-load-url="[?php echo url_for(array('module' => '<?php echo $this->getModuleName() ?>', 'action' => 'showFilters')) ?]"></div>
     <?php if ($this->configuration->hasFilterForm()): ?>
              <a class="advance_search f_left" title="[?php echo __('Recherche avancée') ?]"></a>
             <?php endif; ?>
@@ -10,7 +10,7 @@
     
     printf('<form action="%s" method="get">', url_for('@<?php echo $this->getUrlForAction('list') ?>'));
     printf('<input id="module_search_input" class="ui-corner-left  f_left" type="text" title="%s" value="%s" name="search"/>',
-      __('Rechercher dans %1%', array('%1%' =>__(@<?php echo $this->getModuleName() ?>))),
+      __('Rechercher dans ') . '<?php echo $this->getModuleName() ?>',
       $currentSearch
     );
     printf('<input type="submit" id="button_module_search" class="mp_submit  no_margin graybutton f_left" value="%s" />', __('Rechercher'));
