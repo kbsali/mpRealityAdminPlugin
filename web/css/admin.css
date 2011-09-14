@@ -100,7 +100,7 @@ border: 0;border-right: 1px solid #CCCCCC;color: #999999;font-size: 10px;font-we
 #sf_admin_container .title{border-bottom: 2px solid #CCCCCC;margin-bottom: 30px;padding-bottom: 10px;}
 #sf_admin_container .title h1 {float:left;margin-bottom:0;}
 #sf_admin_container .title .new-record {padding-left:20px;background: url(../images/new.png) no-repeat 0 3px;font-size:18px;}
-#sf_admin_container .content-box-header{background: url("../images/content-header_bg.png") repeat scroll 0 0 transparent;border-bottom: 1px solid #C4C4C4;border-top: 1px solid #FFFFFF;height: 34px;padding: 0 1%;overflow:hidden;}
+#sf_admin_container .content-box-header{background: url("../images/content-header_bg.png") repeat scroll 0 0 transparent;border-bottom: 1px solid #C4C4C4;border-top: 1px solid #FFFFFF;height: 34px;padding: 0 1%;overflow:hidden;width:98%;}
 #sf_admin_container .content-box-header h3{color: #626262;font-size: 14px;line-height: 30px;margin: 0;}
 #sf_admin_container .content-box {background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #C4C4C4;margin:0 5px 16px 0px;}
 #sf_admin_container .content-box-header h1 {float: left;line-height: 34px;margin:0;color: #626262;text-transform: none;}
