@@ -4,20 +4,17 @@
     $configuration['show'] = $this->getFieldsShow();
     return $configuration;
   }
-
   protected function compile()
   {
     parent::compile();
-    
     $config = $this->getConfig();
-    
-    // add configuration for the show view 
-    $this->configuration['show'] = array( 'fields'         => array(),
-                                          'title'          => $this->getShowTitle(),
-                                          'actions'        => $this->getShowActions(),
-                                          'display'        => $this->getShowDisplay(),
-                                        ) ;
-
+    // add configuration for the show view
+    $this->configuration['show'] = array(
+      'fields'         => array(),
+      'title'          => $this->getShowTitle(),
+      'actions'        => $this->getShowActions(),
+      'display'        => $this->getShowDisplay(),
+    ) ;
     // show actions
     foreach (array('show') as $context)
     {
@@ -25,21 +22,18 @@
       {
         $this->configuration[$context]['actions'][$action] = $this->fixActionParameters($action, $parameters);
       }
-    } 
+    }
   }
-
   public function getShowActions()
   {
     return <?php echo $this->asPhp(isset($this->config['show']['actions']) ? $this->config['show']['actions'] : array('_list' => null, '_edit' => null, '_delete' => null)) ?>;
 <?php unset($this->config['show']['actions']) ?>
   }
-
   public function getShowTitle()
   {
     return '<?php echo $this->escapeString(isset($this->config['show']['title']) ? $this->config['show']['title'] : 'Aperçu '. sfInflector::humanize($this->getModuleName())) ?>';
 <?php unset($this->config['show']['title']) ?>
   }
-
   public function getShowDisplay()
   {
   <?php if (isset($this->config['show']['display'])): ?>

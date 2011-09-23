@@ -1,10 +1,10 @@
-﻿[?php
-$show = __(' Afficher ');
-$perPage = __(' par page');
+﻿[?php if($sf_request->isXmlHttpRequest()) return; ?]
+[?php
+$show = __(' Show ');
+$perPage = __(' per page');
 $nbRecords = array('3','5','10', '20', '50', '100', '∞');
 $currentMaxPerPage = $sf_user->getAttribute('<?php echo $this->getModuleName() ?>.max_per_page', $pager->getMaxPerPage(),'admin_module');
 ?]
-
 | [?php echo $show ?]
 <select  class="select_max_per_page" >
 [?php  foreach(sfConfig::get('app_mp_reality_max_per_page', $nbRecords) as $maxPerPage): ?]
@@ -15,9 +15,9 @@ $currentMaxPerPage = $sf_user->getAttribute('<?php echo $this->getModuleName() ?
 
 <script type="text/javascript">
 /* <![CDATA[ */
-function changePageSize(val){
-        var newLocation = "[?php echo url_for('@<?php echo $this->getUrlForAction('list') ?>') ?]?maxPerPage="+val;
-        window.location=newLocation;
-    }
+function changePageSize(val) {
+  var newLocation = "[?php echo url_for('@<?php echo $this->getUrlForAction('list') ?>') ?]?maxPerPage="+val;
+  window.location=newLocation;
+}
 /* ]]> */
 </script>

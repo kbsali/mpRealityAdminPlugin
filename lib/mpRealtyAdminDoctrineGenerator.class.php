@@ -40,7 +40,7 @@ class mpRealtyAdminDoctrineGenerator extends sfDoctrineGenerator
     }
     else if ('Boolean' == $field->getType())
     {
-      $html = "sprintf('<a class=\"bloc bool_%s {field: \'%s\'}\" title=\"%s\"></a>', ".$html." ? 'tick' : 'cross', '".$fieldName."', __('Cliquer pour modifier'))";
+      $html = "sprintf('<a class=\"bloc bool_%s {field: \'%s\'}\" title=\"%s\"></a>', ".$html." ? 'tick' : 'cross', '".$fieldName."', __('Click to modify'))";
     }
 
     if ($field->isLink())
