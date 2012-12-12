@@ -14,7 +14,7 @@ class mpDashboardReality
       
       if (isset($value['items']))
       {
-        array_walk($categories[$key]['items'], 'mpDashboardReality::initialize');
+        array_walk($categories[$key]['items'], array(__CLASS__, 'initialize'));
       }
     }
 
